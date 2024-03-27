@@ -57,7 +57,7 @@ user_commits = get_user_commits(username)
 
 if user_commits is not None:
     if have_pushed_today(user_commits):
-        print("You have pushed to GitHub today. 🎉")
+        print("You have pushed to GitHub today. ✅")
     else:
-        print("You haven't pushed to GitHub today. 😢")
+        print("You haven't pushed to GitHub today. ❌")
     print_last_push_date(user_commits)
