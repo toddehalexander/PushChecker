@@ -35,11 +35,29 @@ def have_pushed_today(push_events):
             return True
     return False
 
+def print_last_push_date(push_events):
+    if not push_events:
+        print("No push events found.")
+        return
+
+    last_push_date = None
+    for event in push_events:
+        event_date = datetime.strptime(event['created_at'], "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc).astimezone(tz=None).date()
+        if last_push_date is None or event_date > last_push_date:
+            last_push_date = event_date
+
+    today = datetime.now().date()
+    if last_push_date == today:
+        print(f"You pushed today: {last_push_date}")
+    else:
+        print(f"Last push date: {last_push_date}")
+
 # Fetch user's push events
 user_commits = get_user_commits(username)
 
 if user_commits is not None:
     if have_pushed_today(user_commits):
-        print("You have pushed to GitHub today.")
+        print("You have pushed to GitHub today. 🎉")
     else:
-        print("You haven't pushed to GitHub today.")
+        print("You haven't pushed to GitHub today. 😢")
+    print_last_push_date(user_commits)
