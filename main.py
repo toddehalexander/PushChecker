@@ -26,7 +26,7 @@ def have_pushed_today(push_events):
         return False
     # Get today's date in local time
     today = datetime.now().date()
-    # Convert today's date to UTC for comparison
+    # Convert today's date to UTC for comparison; Github is on utc time zone
     today_utc = datetime.now(timezone.utc).date()
     # Check if any push event occurred today in local time
     for event in push_events:
