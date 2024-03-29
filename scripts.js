@@ -3,7 +3,18 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function fetchCommits() {
-    const username = document.getElementById("username").value;
+    const usernameInput = document.getElementById("username");
+    const username = sanitizeInput(usernameInput.value); // Sanitize username input
+
+    // Check if input contains illegal characters
+    if (username !== usernameInput.value) {
+        alert("Username contains illegal characters. Please use only alphanumeric characters, hyphens, and underscores.");
+        // Clear the input field
+        usernameInput.value = "";
+        // Return without making the request
+        return;
+    }
+
     const url = `https://api.github.com/users/${username}/events/public`;
     const loadingDiv = document.getElementById("loading");
     const resultDiv = document.getElementById("result");
@@ -24,12 +35,12 @@ function fetchCommits() {
                 
                 resultDiv.innerHTML = pushedToday ? `You have pushed to GitHub today. ✅<br>Last push date: ${lastPushDate}` : `You haven't pushed to GitHub today. ❌<br>Last push date: ${lastPushDate}`;
             } else {
-                resultDiv.textContent = "No push events found.";
+                resultDiv.textContent = "User does exist, but has no public push events.";
             }
         })
         .catch(error => {
             console.error("Error fetching data:", error);
-            resultDiv.textContent = "Failed to fetch data from GitHub API";
+            resultDiv.textContent = "Failed to fetch data from GitHub API, invalid username or rate limit exceeded.";
             loadingDiv.style.display = "none";
         });
 }
@@ -49,4 +60,9 @@ function getLastPushDate(pushEvents) {
         }
     });
     return lastPushDate ? lastPushDate.toDateString() : "Unknown";
+}
+
+function sanitizeInput(input) {
+    // Sanitize input to prevent potential XSS attacks
+    return input.replace(/[^a-zA-Z0-9-_]/g, ''); // Allow only alphanumeric characters, hyphens, and underscores
 }
