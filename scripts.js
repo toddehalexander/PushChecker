@@ -18,25 +18,31 @@ function fetchCommits() {
     loadingDiv.style.display = "block";
 
     fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            loadingDiv.style.display = "none";
-            const pushEvents = data.filter(event => event.type === 'PushEvent');
-            
-            if (pushEvents.length > 0) {
-                const pushedToday = pushEvents.some(event => isToday(event.created_at));
-                const lastPushDate = getLastPushDate(pushEvents);
-                
-                resultDiv.innerHTML = pushedToday ? `You have pushed to GitHub today. ✅<br>Last push date: ${lastPushDate}` : `You haven't pushed to GitHub today. ❌<br>Last push date: ${lastPushDate}`;
-            } else {
-                resultDiv.textContent = "User does exist, but has no public push events.";
-            }
-        })
-        .catch(error => {
-            console.error("Error fetching data:", error);
-            resultDiv.textContent = "Failed to fetch data from GitHub API, invalid username or rate limit exceeded.";
-            loadingDiv.style.display = "none";
-        });
+    .then(response => response.json())
+    .then(data => {
+        loadingDiv.style.display = "none";
+        const pushEvents = data.filter(event => event.type === 'PushEvent');
+
+        if (pushEvents.length > 0) {
+            const pushedToday = pushEvents.some(event => isToday(event.created_at));
+            const lastPushDate = getLastPushDate(pushEvents);
+            const avatarUrl = data[0]?.actor?.avatar_url; // Get avatar URL
+
+            // Set the img and result content separately
+            const imgContent = `<img src="${avatarUrl}" alt="Profile Picture" width="100" height="100">`;
+            const resultContent = pushedToday ? `You have pushed to GitHub today. ✅<br>Last push date: ${lastPushDate}` : `You haven't pushed to GitHub today. ❌<br>Last push date: ${lastPushDate}`;
+
+            // Set the content in the resultDiv
+            resultDiv.innerHTML = `${imgContent}<br>${resultContent}`;
+        } else {
+            resultDiv.textContent = "User does exist, but has no public push events.";
+        }
+    })
+    .catch(error => {
+        console.error("Error fetching data:", error);
+        resultDiv.textContent = "Failed to fetch data from GitHub API, invalid username or rate limit exceeded.";
+        loadingDiv.style.display = "none";
+    });
 }
 
 function isToday(dateString) {
