@@ -4,7 +4,7 @@ from datetime import datetime, timezone
 # Get GitHub username from user
 username = input("Enter your GitHub username: ")
 
-def get_user_commits(username):
+def get_user_pushes(username):
     # GitHub API endpoint to fetch user's public events
     url = f"https://api.github.com/users/{username}/events/public"
 
@@ -53,11 +53,11 @@ def print_last_push_date(push_events):
         print(f"Last push date: {last_push_date}")
 
 # Fetch user's push events
-user_commits = get_user_commits(username)
+user_pushes = get_user_pushes(username)
 
-if user_commits is not None:
-    if have_pushed_today(user_commits):
+if user_pushes is not None:
+    if have_pushed_today(user_pushes):
         print("You have pushed to GitHub today. ✅")
     else:
         print("You haven't pushed to GitHub today. ❌")
-    print_last_push_date(user_commits)
+    print_last_push_date(user_pushes)

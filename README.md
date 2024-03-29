@@ -1,13 +1,13 @@
-# GitHub Commit Checker 🚀
+# GitHub Push Checker 🚀
 
 ## Description ℹ️
 
-This project allows you to check your GitHub commit activity.
+This project allows you to check your GitHub push activity.
 
 ## Functionality 🛠️
 
 - Enter your GitHub username.
-- Click "Check Commits" to see if you've pushed to GitHub today.
+- Click "Check Pushes" to see if you've pushed to GitHub today.
 - Displays your last push date.
 
 ## Implementation 🖥️
@@ -25,7 +25,7 @@ This project allows you to check your GitHub commit activity.
 ## Usage 🚀
 
 - Enter your GitHub username.
-- Click "Check Commits" to see your commit activity.
+- Click "Check Pushes" to see your push activity.
 
 ## Credits 🙏
 

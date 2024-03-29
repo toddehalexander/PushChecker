@@ -1,13 +1,13 @@
 document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('checkCommits').addEventListener('click', fetchCommits);
+    document.getElementById('checkPushes').addEventListener('click', fetchPushes);
     document.getElementById('username').addEventListener('keypress', function(event) {
         if (event.key === 'Enter') {
-            fetchCommits();
+            fetchPushes();
         }
     });
 });
 
-function fetchCommits() {
+function fetchPushes() {
     const username = sanitizeInput(document.getElementById("username").value); // Sanitize username input
     const url = `https://api.github.com/users/${username}/events/public`;
     const loadingDiv = document.getElementById("loading");
