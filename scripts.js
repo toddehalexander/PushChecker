@@ -1,3 +1,7 @@
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('checkCommits').addEventListener('click', fetchCommits);
+});
+
 function fetchCommits() {
     const username = document.getElementById("username").value;
     const url = `https://api.github.com/users/${username}/events/public`;

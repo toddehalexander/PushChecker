@@ -1,0 +1,29 @@
+{
+    "manifest_version": 3,
+    "name": "GitHub Commit Checker",
+    "version": "1.0",
+    "description": "Check your GitHub commits easily.",
+    "permissions": ["activeTab", "scripting"],
+    "action": {
+      "default_popup": "index.html",
+      "default_icon": {
+        "16": "icon.png",
+        "48": "icon.png",
+        "128": "icon.png"
+      }
+    },
+    "icons": {
+      "16": "icon.png",
+      "48": "icon.png",
+      "128": "icon.png"
+    },
+    "host_permissions": ["https://api.github.com/*"],
+    "content_scripts": [
+      {
+        "matches": ["<all_urls>"],
+        "js": ["scripts.js"],
+        "css": ["styles.css"]
+      }
+    ]
+  }
+  
