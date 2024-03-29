@@ -17,13 +17,6 @@
       "48": "icon.png",
       "128": "icon.png"
     },
-    "host_permissions": ["https://api.github.com/*"],
-    "content_scripts": [
-      {
-        "matches": ["<all_urls>"],
-        "js": ["scripts.js"],
-        "css": ["styles.css"]
-      }
-    ]
+    "host_permissions": ["https://api.github.com/*"]
   }
   
