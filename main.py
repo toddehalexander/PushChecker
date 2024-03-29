@@ -24,7 +24,7 @@ def get_user_commits(username):
 def have_pushed_today(push_events):
     if not push_events:
         return False
-    # Get today's date in local time
+    # Get today's date in local time zone
     today = datetime.now().date()
     # Convert today's date to UTC for comparison; Github is on utc time zone
     today_utc = datetime.now(timezone.utc).date()
