@@ -20,7 +20,7 @@ This project allows you to check your GitHub commit activity.
 
 ## Instructions 📋
 
-- Head over to [text](https://toddehalexander.github.io/PushChecker/)
+- Head over to [https://toddehalexander.github.io/PushChecker/](https://toddehalexander.github.io/PushChecker/)
 
 ## Usage 🚀
 
