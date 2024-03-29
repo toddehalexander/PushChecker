@@ -1,7 +1,3 @@
-document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('checkCommits').addEventListener('click', fetchCommits);
-});
-
 function fetchCommits() {
     const usernameInput = document.getElementById("username");
     const username = sanitizeInput(usernameInput.value); // Sanitize username input
@@ -24,7 +20,12 @@ function fetchCommits() {
     loadingDiv.style.display = "block";
 
     fetch(url)
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
         .then(data => {
             loadingDiv.style.display = "none";
             const pushEvents = data.filter(event => event.type === 'PushEvent');
@@ -40,29 +41,7 @@ function fetchCommits() {
         })
         .catch(error => {
             console.error("Error fetching data:", error);
-            resultDiv.textContent = "Failed to fetch data from GitHub API, invalid username or rate limit exceeded.";
+            resultDiv.textContent = "Failed to fetch data from GitHub API. Please check your internet connection or try again later.";
             loadingDiv.style.display = "none";
         });
-}
-
-function isToday(dateString) {
-    const eventDate = new Date(dateString);
-    const today = new Date();
-    return eventDate.toDateString() === today.toDateString();
-}
-
-function getLastPushDate(pushEvents) {
-    let lastPushDate = null;
-    pushEvents.forEach(event => {
-        const eventDate = new Date(event.created_at);
-        if (!lastPushDate || eventDate > lastPushDate) {
-            lastPushDate = eventDate;
-        }
-    });
-    return lastPushDate ? lastPushDate.toDateString() : "Unknown";
-}
-
-function sanitizeInput(input) {
-    // Sanitize input to prevent potential XSS attacks
-    return input.replace(/[^a-zA-Z0-9-_]/g, ''); // Allow only alphanumeric characters, hyphens, and underscores
 }
