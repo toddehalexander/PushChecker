@@ -1,3 +1,9 @@
 #loading {
     display: none;
 }
+body {
+    width: 20em; /* Adjust the width in em units */
+    height: 12em; /* Adjust the height in em units */
+    margin: 1em; /* Adjust margin for spacing */
+    font-size: 1em; /* Set the font size */
+}
