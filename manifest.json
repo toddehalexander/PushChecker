@@ -3,7 +3,6 @@
   "name": "GitHub Push Checker",
   "version": "1.0",
   "description": "Check your GitHub pushes easily.",
-  "permissions": ["activeTab", "scripting"],
   "action": {
     "default_popup": "index.html",
     "default_icon": {
