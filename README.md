@@ -24,7 +24,7 @@ This project allows you to check your GitHub push activity.
 
 ## Chrome Extension Installation
 
-  1. Either clone the repo using ```https://github.com/toddehalexander/PushChecker``` or Download the zip file of the repository and *Extract Here* so the files are located inside of a folder, not a zip.
+  1. Either clone the repo using ```git clone https://github.com/toddehalexander/PushChecker``` or Download the zip file of the repository and *Extract Here* so the files are located inside of a folder, not a zip.
   2. To import the extension to chrome, head to the following URL, ```chrome://extensions/```
   3. Enable "Developer mode" by toggling the switch at the top right corner.
   4. Click on the "Load unpacked" button.
