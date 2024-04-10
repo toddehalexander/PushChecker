@@ -18,5 +18,10 @@
   },
   "host_permissions": ["https://api.github.com/*"],
   "permissions": ["https://api.github.com/*"],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "My chosen ID for this extension"
+    }
+  },
   "id": "a1b2c3d4-e5f6-7g8h-i9j0-k1l2m3n4o5p"
 }
