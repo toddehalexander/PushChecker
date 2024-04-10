@@ -1,5 +1,6 @@
 {
   "manifest_version": 3,
+  "id": "com.example.githubpushchecker.v1.0.0",
   "name": "GitHub Push Checker",
   "version": "1.0",
   "description": "Check your GitHub pushes easily.",
