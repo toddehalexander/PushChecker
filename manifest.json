@@ -1,6 +1,5 @@
 {
   "manifest_version": 3,
-  "id": "a1b2c3d4-e5f6-7g8h-i9j0-k1l2m3n4o5p",
   "name": "GitHub Push Checker",
   "version": "1.0",
   "description": "Check your GitHub pushes easily.",
@@ -17,5 +16,7 @@
     "48": "icon.png",
     "128": "icon.png"
   },
-  "host_permissions": ["https://api.github.com/*"]
+  "host_permissions": ["https://api.github.com/*"],
+  "permissions": ["https://api.github.com/*"],
+  "id": "a1b2c3d4-e5f6-7g8h-i9j0-k1l2m3n4o5p"
 }
