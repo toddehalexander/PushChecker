@@ -18,13 +18,13 @@ This project allows you to check your GitHub push activity.
 - HTML for the user interface.
 - CSS for styling.
 
-## Instructions 📋
-
-- Head over to [https://toddehalexander.github.io/PushChecker/](https://toddehalexander.github.io/PushChecker/)
-
 ## Chrome Extension Installation
 
 - Head over to [Chrome webstore Link](https://chromewebstore.google.com/detail/github-push-checker/ibaagdfbkoopoccnodlnkkiafedkhjkh?hl=en&authuser=0)
+
+## Instructions 📋
+
+- Head over to [Web Hosted Version](https://toddehalexander.github.io/PushChecker/)
 
 ## Usage 🚀
 
