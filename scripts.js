@@ -72,22 +72,30 @@ function getLastPushDate(pushEvents) {
 
 function calculateStreak(pushEvents) {
     let streak = 0;
+    let countedDates = new Set();
     let today = new Date();
     let yesterday = new Date(today);
     yesterday.setDate(yesterday.getDate() - 1);
+    
     for (let i = 0; i < pushEvents.length; i++) {
         const eventDate = new Date(pushEvents[i].created_at);
-        if (eventDate.toDateString() === today.toDateString()) {
-            streak++;
-            today.setDate(today.getDate() - 1);
-        } else if (eventDate.toDateString() === yesterday.toDateString()) {
-            yesterday.setDate(yesterday.getDate() - 1);
-        } else {
-            break;
+        
+        // Check if the event date has already been counted
+        if (!countedDates.has(eventDate.toDateString())) {
+            if (eventDate.toDateString() === today.toDateString()) {
+                streak++;
+                countedDates.add(eventDate.toDateString());
+                today.setDate(today.getDate() - 1);
+            } else if (eventDate.toDateString() === yesterday.toDateString()) {
+                yesterday.setDate(yesterday.getDate() - 1);
+            } else {
+                break;
+            }
         }
     }
     return streak;
 }
+
 
 function sanitizeInput(input) {
     // Sanitize input to prevent potential XSS attacks
