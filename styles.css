@@ -49,3 +49,8 @@ button {
     height: 50px; /* Adjust the size as needed */
     border-radius: 50%; /* Make the image round */
 }
+a:link,
+a:visited {
+    color: #ff79c6; /* Change link color for both unvisited and visited links */
+    text-decoration: underline; /* Remove underline */
+}

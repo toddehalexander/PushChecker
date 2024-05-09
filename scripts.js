@@ -1,3 +1,4 @@
+
 document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('checkPushes').addEventListener('click', fetchPushes);
     document.getElementById('username').addEventListener('keypress', function(event) {
@@ -28,9 +29,16 @@ function fetchPushes() {
             const lastPushDate = getLastPushDate(pushEvents);
             const avatarUrl = data[0]?.actor?.avatar_url; // Get avatar URL
 
+            // Calculate streak
+            const streak = calculateStreak(pushEvents);
+
             // Set the img and result content separately
             const imgContent = `<img src="${avatarUrl}" alt="Profile Picture" width="100" height="100">`;
-            const resultContent = pushedToday ? `You have pushed to GitHub today. ✅<br>Last push date: ${lastPushDate}` : `You haven't pushed to GitHub today. ❌<br>Last push date: ${lastPushDate}`;
+            let resultContent = pushedToday ? `You have pushed to <a href="https://github.com/${username}" target="_blank">GitHub</a> today. ✅<br>` : `You haven't pushed to <a href="https://github.com/${username}" target="_blank">GitHub</a> today. ❌<br>`;
+            resultContent += `Last push date: ${lastPushDate}<br>`;
+            if (streak > 0) {
+                resultContent += `Streak: ${streak} days 🔥`;
+            }
 
             // Set the content in the resultDiv
             resultDiv.innerHTML = `${imgContent}<br>${resultContent}`;
@@ -60,6 +68,25 @@ function getLastPushDate(pushEvents) {
         }
     });
     return lastPushDate ? lastPushDate.toDateString() : "Unknown";
+}
+
+function calculateStreak(pushEvents) {
+    let streak = 0;
+    let today = new Date();
+    let yesterday = new Date(today);
+    yesterday.setDate(yesterday.getDate() - 1);
+    for (let i = 0; i < pushEvents.length; i++) {
+        const eventDate = new Date(pushEvents[i].created_at);
+        if (eventDate.toDateString() === today.toDateString()) {
+            streak++;
+            today.setDate(today.getDate() - 1);
+        } else if (eventDate.toDateString() === yesterday.toDateString()) {
+            yesterday.setDate(yesterday.getDate() - 1);
+        } else {
+            break;
+        }
+    }
+    return streak;
 }
 
 function sanitizeInput(input) {
