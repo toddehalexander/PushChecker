@@ -1,6 +1,9 @@
 # GitHub Push Checker 🚀
 
-![UseCase](/assets/UsePushCheck.gif)
+<div>
+  <img src="/assets/UsePushCheck.gif" alt="UseCase">
+  <img src="/assets/torvalds.png" alt="example">
+</div>
 
 ## Functionality 🛠️
 
