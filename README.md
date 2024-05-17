@@ -1,14 +1,13 @@
 # GitHub Push Checker 🚀
 
-## Description ℹ️
-
-This project allows you to check your GitHub push activity.
+![UseCase](/assets/UsePushCheck.gif)
 
 ## Functionality 🛠️
 
 - Enter your GitHub username.
 - Click "Check Pushes" to see if you've pushed to GitHub today.
-- Displays your last push date.
+- Displays your last push date. 📅
+- Shows your current streak of consecutive days with pushes. 🔥
 
 ## Implementation 🖥️
 
@@ -30,6 +29,7 @@ This project allows you to check your GitHub push activity.
 
 - Enter your GitHub username.
 - Click "Check Pushes" to see your push activity.
+- View your current streak of consecutive days with pushes.
 
 ## Credits 🙏
 
