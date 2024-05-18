@@ -1,4 +1,3 @@
-
 document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('checkPushes').addEventListener('click', fetchPushes);
     document.getElementById('username').addEventListener('keypress', function(event) {
@@ -30,7 +29,7 @@ function fetchPushes() {
             const avatarUrl = data[0]?.actor?.avatar_url; // Get avatar URL
 
             // Calculate streak
-            const streak = calculateStreak(pushEvents);
+            const streak = calculateStreak(pushEvents, username);
 
             // Set the img and result content separately
             const imgContent = `<img src="${avatarUrl}" alt="Profile Picture" width="100" height="100">`;
@@ -70,32 +69,50 @@ function getLastPushDate(pushEvents) {
     return lastPushDate ? lastPushDate.toDateString() : "Unknown";
 }
 
-function calculateStreak(pushEvents) {
+function calculateStreak(pushEvents, username) {
     let streak = 0;
+    let maxStreak = 0;
     let countedDates = new Set();
-    let today = new Date();
-    let yesterday = new Date(today);
-    yesterday.setDate(yesterday.getDate() - 1);
-    
-    for (let i = 0; i < pushEvents.length; i++) {
-        const eventDate = new Date(pushEvents[i].created_at);
-        
-        // Check if the event date has already been counted
-        if (!countedDates.has(eventDate.toDateString())) {
-            if (eventDate.toDateString() === today.toDateString()) {
+
+    // Load previous streak data from local storage
+    let storedStreak = JSON.parse(localStorage.getItem(`streak_${username}`)) || { streak: 0, dates: [] };
+
+    // Add previously counted dates to the set
+    storedStreak.dates.forEach(date => countedDates.add(date));
+
+    // Sort push events by date in ascending order
+    pushEvents.sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
+
+    // Get the earliest and latest push event dates
+    const earliestDate = new Date(pushEvents[0].created_at);
+    const latestDate = new Date(pushEvents[pushEvents.length - 1].created_at);
+
+    // Iterate over the date range and check for consecutive push events
+    for (let currentDate = earliestDate; currentDate <= latestDate; currentDate.setDate(currentDate.getDate() + 1)) {
+        const formattedDate = currentDate.toDateString();
+        if (!countedDates.has(formattedDate)) {
+            countedDates.add(formattedDate);
+            const hasPushEvent = pushEvents.some(event => new Date(event.created_at).toDateString() === formattedDate);
+            if (hasPushEvent) {
                 streak++;
-                countedDates.add(eventDate.toDateString());
-                today.setDate(today.getDate() - 1);
-            } else if (eventDate.toDateString() === yesterday.toDateString()) {
-                yesterday.setDate(yesterday.getDate() - 1);
+                maxStreak = Math.max(maxStreak, streak);
             } else {
-                break;
+                streak = 0;
             }
         }
     }
-    return streak;
+
+    // Save updated streak data to local storage
+    localStorage.setItem(`streak_${username}`, JSON.stringify({ streak: maxStreak, dates: Array.from(countedDates) }));
+
+    return maxStreak;
 }
 
+function isConsecutiveDay(date1, date2) {
+    const oneDay = 24 * 60 * 60 * 1000; // hours * minutes * seconds * milliseconds
+    const diffDays = Math.round(Math.abs((date1.getTime() - date2.getTime()) / oneDay));
+    return diffDays === 1;
+}
 
 function sanitizeInput(input) {
     // Sanitize input to prevent potential XSS attacks
