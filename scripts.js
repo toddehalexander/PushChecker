@@ -72,6 +72,7 @@ function getLastPushDate(pushEvents) {
 function calculateStreak(pushEvents, username) {
     let streak = 0;
     let maxStreak = 0;
+    let currentStreak = 0;
     let countedDates = new Set();
 
     // Load previous streak data from local storage
@@ -83,34 +84,42 @@ function calculateStreak(pushEvents, username) {
     // Sort push events by date in ascending order
     pushEvents.sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
 
-    // Get the earliest and latest push event dates
-    const earliestDate = new Date(pushEvents[0].created_at);
-    const latestDate = new Date(pushEvents[pushEvents.length - 1].created_at);
+    // Iterate over the push events
+    pushEvents.forEach(event => {
+        const eventDate = new Date(event.created_at).toDateString();
+        countedDates.add(eventDate);
+    });
 
-    // Iterate over the date range and check for consecutive push events
-    for (let currentDate = earliestDate; currentDate <= latestDate; currentDate.setDate(currentDate.getDate() + 1)) {
-        const formattedDate = currentDate.toDateString();
-        if (!countedDates.has(formattedDate)) {
-            countedDates.add(formattedDate);
-            const hasPushEvent = pushEvents.some(event => new Date(event.created_at).toDateString() === formattedDate);
-            if (hasPushEvent) {
-                streak++;
-                maxStreak = Math.max(maxStreak, streak);
-            } else {
-                streak = 0;
-            }
+    // Sort countedDates
+    const sortedDates = Array.from(countedDates).map(date => new Date(date)).sort((a, b) => a - b);
+
+    // Calculate current streak
+    let previousDate = new Date(sortedDates[0]);
+    currentStreak = 1;
+
+    for (let i = 1; i < sortedDates.length; i++) {
+        const currentDate = new Date(sortedDates[i]);
+        if (isConsecutiveDay(previousDate, currentDate)) {
+            currentStreak++;
+        } else {
+            currentStreak = 1;
         }
+        maxStreak = Math.max(maxStreak, currentStreak);
+        previousDate = currentDate;
     }
 
-    // Save updated streak data to local storage
-    localStorage.setItem(`streak_${username}`, JSON.stringify({ streak: maxStreak, dates: Array.from(countedDates) }));
+    // Update streak to be current streak
+    streak = currentStreak;
 
-    return maxStreak;
+    // Save updated streak data to local storage
+    localStorage.setItem(`streak_${username}`, JSON.stringify({ streak: streak, dates: Array.from(countedDates) }));
+
+    return streak;
 }
 
 function isConsecutiveDay(date1, date2) {
     const oneDay = 24 * 60 * 60 * 1000; // hours * minutes * seconds * milliseconds
-    const diffDays = Math.round(Math.abs((date1.getTime() - date2.getTime()) / oneDay));
+    const diffDays = Math.round((date2 - date1) / oneDay);
     return diffDays === 1;
 }
 
