@@ -5,7 +5,7 @@
   <img src="/assets/torvalds.png" alt="example">
 </div>
 
-## Functionality 🛠️
+## Functionality 🛠️ 
 
 - Enter your GitHub username.
 - Click "Check Pushes" to see if you've pushed to GitHub today.
