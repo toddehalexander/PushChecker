@@ -93,23 +93,31 @@ function calculateStreak(pushEvents, username) {
     // Sort countedDates
     const sortedDates = Array.from(countedDates).map(date => new Date(date)).sort((a, b) => a - b);
 
-    // Calculate current streak
-    let previousDate = new Date(sortedDates[0]);
-    currentStreak = 1;
+    // Check if the user has pushed today
+    const pushedToday = sortedDates.some(date => isToday(date));
 
-    for (let i = 1; i < sortedDates.length; i++) {
-        const currentDate = new Date(sortedDates[i]);
-        if (isConsecutiveDay(previousDate, currentDate)) {
-            currentStreak++;
-        } else {
-            currentStreak = 1;
+    // Calculate current streak only if the user has pushed today
+    if (pushedToday) {
+        let previousDate = new Date(sortedDates[0]);
+        currentStreak = 1;
+
+        for (let i = 1; i < sortedDates.length; i++) {
+            const currentDate = new Date(sortedDates[i]);
+            if (isConsecutiveDay(previousDate, currentDate)) {
+                currentStreak++;
+            } else {
+                currentStreak = 1;
+            }
+            maxStreak = Math.max(maxStreak, currentStreak);
+            previousDate = currentDate;
         }
-        maxStreak = Math.max(maxStreak, currentStreak);
-        previousDate = currentDate;
-    }
 
-    // Update streak to be current streak
-    streak = currentStreak;
+        // Update streak to be current streak
+        streak = currentStreak;
+    } else {
+        // Reset streak to 0 if the user hasn't pushed today
+        streak = 0;
+    }
 
     // Save updated streak data to local storage
     localStorage.setItem(`streak_${username}`, JSON.stringify({ streak: streak, dates: Array.from(countedDates) }));
