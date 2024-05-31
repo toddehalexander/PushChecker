@@ -31,16 +31,17 @@ function fetchPushes() {
             // Calculate streak
             const streak = calculateStreak(pushEvents, username);
 
-            // Set the img and result content separately
             const imgContent = `<img src="${avatarUrl}" alt="Profile Picture" width="100" height="100">`;
+            const greetingContent = `<p>Hello, ${username}!</p>`; // Add this line
             let resultContent = pushedToday ? `You have pushed to <a href="https://github.com/${username}" target="_blank">GitHub</a> today. ✅<br>` : `You haven't pushed to <a href="https://github.com/${username}" target="_blank">GitHub</a> today. ❌<br>`;
-            resultContent += `Last push date: ${lastPushDate}<br>`;
+            resultContent += `Last public push date: ${lastPushDate}<br>`;
             if (streak > 0) {
                 resultContent += `Streak: ${streak} days 🔥`;
             }
+        
 
             // Set the content in the resultDiv
-            resultDiv.innerHTML = `${imgContent}<br>${resultContent}`;
+            resultDiv.innerHTML = `${imgContent}<br>${greetingContent}${resultContent}`;
         } else {
             resultDiv.textContent = "User does exist, but has no public push events.";
         }
