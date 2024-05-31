@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "GitHub Push Checker",
-  "version": "1.2",
+  "version": "1.2.1",
   "description": "Check your GitHub pushes easily.",
   "action": {
     "default_popup": "index.html",
