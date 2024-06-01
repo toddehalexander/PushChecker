@@ -6,7 +6,7 @@
 </div>
  
 ## Functionality 🛠️ 
-
+ 
 - Enter your GitHub username.
 - Click "Check Pushes" to see if you've pushed to GitHub today.
 - Displays your last push date. 📅
