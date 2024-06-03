@@ -3,6 +3,7 @@
   "name": "GitHub Push Checker",
   "version": "1.2.2",
   "description": "Check your GitHub pushes easily.",
+  "author": "Toddeh Alexander",
   "action": {
     "default_popup": "index.html",
     "default_icon": {
